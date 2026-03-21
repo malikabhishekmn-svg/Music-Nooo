@@ -2,18 +2,21 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images"
-public_folder: "/images"
-
 collections:
-  - name: "settings"
-    label: "Video Settings"
+  - name: "content"
+    label: "Site Content"
     files:
-      - label: "Video List"
-        name: "videos"
+      - label: "Website Data"
+        name: "data"
         file: "videos.json"
         fields:
-          - label: "Videos"
+          - {label: "Home Page Message", name: "home_text", widget: "string"}
+          - label: "Contact Info"
+            name: "contact"
+            widget: "object"
+            fields:
+              - {label: "Email Address", name: "email", widget: "string"}
+          - label: "Video List"
             name: "videos"
             widget: "list"
             fields:
