@@ -1,13 +1,13 @@
 {
-  "home_text": "අලුත්ම වීඩියෝ එක දැන් බලන්න!",
+  "home_text": "WELCOME MUSIC NOOO",
   "contact": {
-    "email": "yourname@gmail.com"
+    "email": "malikabhishek.mn@gmail.com"
   },
   "videos": [
     {
-      "title": "New Music",
+      "title": "STERO LOVE |MUSIC NOOO",
       "thumbnail": "https://img.youtube.com/vi/0Uib5PdgXfM/maxresdefault.jpg",
-      "youtube_link": "https://youtube.com/...",
+      "youtube_link": "https://m.youtube.com/watch?v=0Uib5PdgXfM",
       "download_link": "#"
     }
   ]
