@@ -1,0 +1,10 @@
+{
+  "videos": [
+    {
+      "title": "Welcome to Music Nooo",
+      "thumbnail": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+      "youtube_link": "https://youtube.com",
+      "download_link": "#"
+    }
+  ]
+}
