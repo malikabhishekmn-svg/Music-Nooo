@@ -1,52 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUSIC NOOO | PORTAL</title>
+    <title>MUSIC NOOO | OFFICIAL</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --neon: #00f2ff; --bg: #0a0a0a; --card: #151515; }
-        body { background: var(--bg); color: white; font-family: 'Poppins', sans-serif; margin: 0; text-align: center; }
-        .hero { padding: 100px 20px; background: linear-gradient(rgba(0,0,0,0.8), #0a0a0a), url('https://wallpaperaccess.com/full/1154341.jpg'); background-size: cover; }
-        h1 { font-size: 4rem; color: var(--neon); text-shadow: 0 0 20px var(--neon); margin: 0; }
-        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 50px 8%; }
-        .card { background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); border-color: var(--neon); box-shadow: 0 0 20px var(--neon); }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
-        .card-body { padding: 20px; }
-        .btn { display: inline-block; padding: 10px 20px; background: var(--neon); color: black; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 10px; }
+        :root {
+            --primary: #00f2ff; --secondary: #7000ff; --bg: #050505; --text: #ffffff;
+            --glass: rgba(255, 255, 255, 0.05); --blur: blur(15px);
+        }
+        [data-theme="light"] {
+            --primary: #0072ff; --secondary: #6200ea; --bg: #f0f2f5; --text: #1a1a1a;
+            --glass: rgba(0, 0, 0, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+
+        /* Liquid Animated Background */
+        .liquid-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: linear-gradient(45deg, var(--bg), #1a0033, var(--bg));
+            filter: blur(80px); opacity: 0.6;
+        }
+
+        nav {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: var(--glass); backdrop-filter: var(--blur);
+            padding: 15px 40px; border-radius: 50px; display: flex; gap: 30px;
+            border: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+        }
+        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; }
+        nav a:hover, nav a.active { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+        .theme-toggle { cursor: pointer; font-size: 1.2rem; color: var(--primary); }
+
+        section { display: none; padding: 120px 8% 50px; min-height: 100vh; animation: fadeIn 0.8s ease; }
+        section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero h1 { font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 8vw, 5rem); text-transform: uppercase; margin-bottom: 10px; }
+        .neon-text { color: var(--primary); text-shadow: 0 0 20px var(--primary); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
+        .glass-card {
+            background: var(--glass); backdrop-filter: var(--blur); border-radius: 25px;
+            padding: 20px; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;
+        }
+        .glass-card:hover { border-color: var(--primary); transform: scale(1.03); box-shadow: 0 0 30px rgba(0,242,255,0.2); }
+        .glass-card img { width: 100%; border-radius: 15px; margin-bottom: 15px; }
+
+        .btn {
+            display: inline-block; padding: 12px 25px; background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.8rem;
+        }
+
+        .contact-info i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <h1>MUSIC NOOO</h1>
-        <p>Official Video & Music Portal</p>
-    </div>
+    <div class="liquid-bg"></div>
 
-    <div class="container" id="video-list">
+    <nav>
+        <a href="#" onclick="showPage('home')" id="nav-home" class="active">HOME</a>
+        <a href="#" onclick="showPage('videos')" id="nav-videos">VIDEOS</a>
+        <a href="#" onclick="showPage('contact')" id="nav-contact">CONTACT</a>
+        <div class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="t-icon"></i></div>
+    </nav>
+
+    <section id="home" class="active">
+        <div class="hero">
+            <h1>MUSIC <span class="neon-text">NOOO</span></h1>
+            <p>Step into the future of sound and visuals.</p>
+            <br><br>
+            <div class="glass-card" style="max-width: 500px; margin: auto;">
+                <h3>Latest Update</h3>
+                <p id="latest-info">Loading...</p>
+            </div>
         </div>
+    </section>
+
+    <section id="videos">
+        <h2 class="neon-text">VIDEO GALLERY</h2>
+        <div class="grid" id="video-container"></div>
+    </section>
+
+    <section id="contact">
+        <h2 class="neon-text">GET IN TOUCH</h2>
+        <div class="grid">
+            <div class="glass-card contact-info">
+                <i class="fas fa-envelope"></i>
+                <h3>Email</h3>
+                <p id="c-email">loading...</p>
+            </div>
+            <div class="glass-card contact-info">
+                <i class="fab fa-instagram"></i>
+                <h3>Socials</h3>
+                <p id="c-social">Follow us</p>
+            </div>
+        </div>
+    </section>
 
     <script>
-        // Netlify CMS එකෙන් දාන Data මෙතනට Load කරන සරල Script එකක්
-        fetch('/videos.json')
-            .then(response => response.json())
-            .then(data => {
-                const list = document.getElementById('video-list');
-                data.videos.forEach(v => {
-                    list.innerHTML += `
-                        <div class="card">
-                            <img src="${v.thumbnail}" alt="thumb">
-                            <div class="card-body">
-                                <h3>${v.title}</h3>
-                                <a href="${v.youtube_link}" target="_blank" class="btn" style="background:#555; color:white;">WATCH</a>
-                                <a href="${v.download_link}" class="btn">DOWNLOAD MP3</a>
-                            </div>
-                        </div>
-                    `;
-                });
+        function showPage(pageId) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+        }
+
+        function toggleTheme() {
+            const body = document.documentElement;
+            const icon = document.getElementById('t-icon');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        fetch('/videos.json').then(res => res.json()).then(data => {
+            // Load Videos
+            const container = document.getElementById('video-container');
+            data.videos.forEach(v => {
+                container.innerHTML += `
+                    <div class="glass-card">
+                        <img src="${v.thumbnail}" alt="thumb">
+                        <h4>${v.title}</h4><br>
+                        <a href="${v.youtube_link}" class="btn">WATCH</a>
+                        <a href="${v.download_link}" class="btn" style="background:transparent; border:1px solid var(--primary)">MP3</a>
+                    </div>`;
             });
+            // Load Contact Info
+            document.getElementById('c-email').innerText = data.contact.email;
+            document.getElementById('latest-info').innerText = data.home_text;
+        });
     </script>
 </body>
-</html>
+    </html>
