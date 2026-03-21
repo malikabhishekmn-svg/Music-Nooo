@@ -2,6 +2,10 @@ backend:
   name: git-gateway
   branch: main
 
+# මෙන්න මේ කොටස් ටික අනිවාර්යයෙන්ම තියෙන්න ඕනේ
+media_folder: "images"
+public_folder: "/images"
+
 collections:
   - name: "content"
     label: "Site Content"
