@@ -1,0 +1,23 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "settings"
+    label: "Video Settings"
+    files:
+      - label: "Video List"
+        name: "videos"
+        file: "videos.json"
+        fields:
+          - label: "Videos"
+            name: "videos"
+            widget: "list"
+            fields:
+              - {label: "Video Title", name: "title", widget: "string"}
+              - {label: "Thumbnail URL", name: "thumbnail", widget: "string"}
+              - {label: "YouTube Link", name: "youtube_link", widget: "string"}
+              - {label: "Download MP3 Link", name: "download_link", widget: "string"}
