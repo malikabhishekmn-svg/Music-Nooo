@@ -23,11 +23,16 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
+        /* --- 4. CUSTOM CURSOR --- */
+        body { cursor: none; }
+        #cursor { width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 99999; transition: transform 0.1s ease; box-shadow: 0 0 15px var(--primary); }
+
         html, body { 
             margin: 0; padding: 0; width: 100%; min-height: 100vh;
             background-color: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif;
             transition: background 0.5s ease;
             display: flex; flex-direction: column;
+            overflow-x: hidden;
         }
 
         /* --- PRELOADER --- */
@@ -46,9 +51,19 @@
 
         /* --- BACK TO TOP --- */
         #backToTop { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: var(--primary); color: #000; border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; z-index: 1000; box-shadow: 0 0 20px var(--primary); transition: 0.3s; border: none; }
-        #backToTop:hover { transform: translateY(-5px); }
 
-        /* --- REST OF CSS --- */
+        /* --- 1. WAVEFORM ANIMATION --- */
+        .waveform { display: flex; align-items: flex-end; gap: 3px; height: 30px; justify-content: center; margin-bottom: 15px; }
+        .wave-bar { width: 3px; height: 100%; background: var(--primary); animation: wave 1s infinite alternate; border-radius: 10px; }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.1s; }
+        @keyframes wave { from { height: 5px; } to { height: 30px; } }
+
+        /* --- 3. TRENDING LABEL --- */
+        .trending-tag { position: absolute; top: 10px; right: 10px; background: #ff0055; color: #fff; font-size: 0.6rem; padding: 4px 10px; border-radius: 50px; font-weight: 700; box-shadow: 0 0 10px #ff0055; animation: blink 1s infinite; z-index: 5; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: linear-gradient(135deg, var(--bg) 20%, var(--secondary) 150%); opacity: 0.4; }
         nav { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); background: var(--glass); backdrop-filter: var(--blur); padding: 8px 20px; border-radius: 100px; display: flex; gap: 10px; align-items: center; border: 1px solid var(--card-border); z-index: 1000; box-shadow: var(--shadow); width: max-content; }
         nav a { color: var(--text); text-decoration: none; font-weight: 700; font-size: 0.65rem; letter-spacing: 1.5px; padding: 10px 15px; border-radius: 50px; transition: 0.3s; cursor: pointer; }
@@ -72,24 +87,30 @@
         .preview-item { width: 280px; height: 160px; border-radius: 25px; background-size: cover; background-position: center; border: 2px solid var(--card-border); cursor: pointer; flex-shrink: 0; display: flex; align-items: flex-end; padding: 15px; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
-        .glass-card { background: var(--glass); backdrop-filter: var(--blur); border-radius: 30px; padding: 20px; border: 1px solid var(--card-border); transition: 0.3s; text-align: left; }
+        .glass-card { position: relative; background: var(--glass); backdrop-filter: var(--blur); border-radius: 30px; padding: 20px; border: 1px solid var(--card-border); transition: 0.3s; text-align: left; }
         .glass-card img { width: 100%; border-radius: 20px; margin-bottom: 15px; }
         
         .btn { padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.75rem; display: inline-block; transition: 0.3s; cursor: pointer; text-decoration: none; border: none; }
         .btn-main { background: var(--primary); color: #000; }
         .btn-outline { border: 1.5px solid var(--primary); color: var(--text); margin-left: 5px; }
 
+        /* --- CONTACT STYLES --- */
+        .contact-links { font-size: 1.8rem; display: flex; justify-content: center; gap: 25px; margin-top: 20px; }
+        .contact-links a { color: var(--text); transition: 0.3s; }
+        .contact-links a:hover { color: var(--primary); transform: scale(1.2); }
+
         .footer-section { margin-top: auto; padding: 30px 20px; background: var(--glass); border-top: 1px solid var(--card-border); text-align: center; font-size: 0.8rem; }
     </style>
 </head>
 <body>
+    <div id="cursor"></div>
+
     <div id="preloader">
         <img src="https://i.ibb.co/wh6rcMjT/FB-IMG-1774107258833.jpg" class="loader-logo">
         <div class="loader-bar"><div class="loader-progress"></div></div>
     </div>
 
     <button id="backToTop" onclick="window.scrollTo(0,0)"><i class="fas fa-arrow-up"></i></button>
-
     <div class="liquid-bg"></div>
 
     <nav>
@@ -100,6 +121,9 @@
     </nav>
 
     <section id="home" class="active">
+        <div class="waveform">
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        </div>
         <p style="letter-spacing: 5px; opacity: 0.6; font-size: 0.8rem;">WELCOME TO</p>
         <h1>MUSIC <span class="neon">NOOO</span></h1>
         <div class="preview-wrapper"><div class="preview-container" id="home-preview"></div></div>
@@ -108,12 +132,10 @@
 
     <section id="videos">
         <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">THE <span class="neon">LIBRARY</span></h2>
-        
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
             <input type="text" id="searchInput" class="search-bar" placeholder="Search music..." onkeyup="filterMusic()">
         </div>
-
         <div class="categories" id="cat-filters">
             <button class="cat-btn active" onclick="filterCategory('All')">All</button>
             <button class="cat-btn" onclick="filterCategory('Hip Hop')">Hip Hop</button>
@@ -121,8 +143,20 @@
             <button class="cat-btn" onclick="filterCategory('Remix')">Remix</button>
             <button class="cat-btn" onclick="filterCategory('Sinhala')">Sinhala</button>
         </div>
-
         <div class="grid" id="video-container"></div>
+    </section>
+
+    <section id="contact">
+        <div class="glass-card" style="max-width: 500px; margin: auto; text-align: center;">
+            <h2 class="neon" style="font-family: 'Syncopate';">CONTACT</h2><br>
+            <p id="latest-info" style="font-size: 0.9rem; opacity: 0.8;"></p><br>
+            <h3 id="c-email" style="color: var(--primary); font-size: 1rem;"></h3><br>
+            <div class="contact-links">
+                <a href="https://youtube.com/@MusicNooo" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://instagram.com/abhishek_malik28" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com/Malik.Abhishek28" target="_blank"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
     </section>
 
     <footer class="footer-section">
@@ -132,6 +166,13 @@
     <script>
         let allVideos = [];
         let currentCategory = 'All';
+
+        // --- 4. CURSOR SCRIPT ---
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
 
         window.addEventListener('load', () => {
             setTimeout(() => document.getElementById('preloader').classList.add('fade-out'), 1500);
@@ -149,21 +190,22 @@
             window.scrollTo(0, 0);
         }
 
+        // --- 2. COPY LINK FUNCTION ---
+        function copyLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                alert("Link Copied to Clipboard!");
+            });
+        }
+
         function filterCategory(cat) {
             currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText === cat);
-            });
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.toggle('active', btn.innerText === cat));
             filterMusic();
         }
 
         function filterMusic() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allVideos.filter(v => {
-                const matchesSearch = v.title.toLowerCase().includes(query);
-                const matchesCat = currentCategory === 'All' || v.category === currentCategory;
-                return matchesSearch && matchesCat;
-            });
+            const filtered = allVideos.filter(v => (currentCategory === 'All' || v.category === currentCategory) && v.title.toLowerCase().includes(query));
             renderVideos(filtered);
         }
 
@@ -171,11 +213,13 @@
             const container = document.getElementById('video-container');
             container.innerHTML = videoList.map(v => `
                 <div class="glass-card">
+                    ${v.trending ? '<div class="trending-tag">TRENDING</div>' : ''}
                     <img src="${v.thumbnail}">
                     <h3 style="font-size: 0.9rem; margin-bottom: 15px;">${v.title}</h3>
-                    <div style="display:flex; gap: 5px;">
+                    <div style="display:flex; gap: 5px; flex-wrap: wrap;">
                         <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:1;">WATCH</a>
                         <a href="${v.download_link}" class="btn btn-outline" style="flex:1;">MP3</a>
+                        <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 40px; margin-left:0;" title="Copy Link"><i class="fas fa-link"></i></button>
                     </div>
                 </div>`).join('');
         }
@@ -188,6 +232,8 @@
                 preview.innerHTML += `<div class="preview-item" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('${v.thumbnail}')" onclick="showPage('videos')">
                     <div style="font-size: 0.7rem; color: #fff; font-weight: bold;">${v.title}</div></div>`;
             });
+            document.getElementById('c-email').innerText = data.contact.email;
+            document.getElementById('latest-info').innerText = data.home_text;
         });
 
         function toggleTheme() {
