@@ -31,6 +31,38 @@
             flex-direction: column;
         }
 
+        /* --- PRELOADER ANIMATION --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .loader-logo {
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 3px solid var(--primary); padding: 5px;
+            box-shadow: 0 0 20px var(--primary);
+            animation: pulse 1.5s infinite alternate;
+        }
+        .loader-bar {
+            width: 150px; height: 3px; background: rgba(255,255,255,0.1);
+            margin-top: 20px; border-radius: 10px; overflow: hidden;
+        }
+        .loader-progress {
+            width: 100%; height: 100%; background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            animation: loading 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.8; }
+            to { transform: scale(1.1); opacity: 1; box-shadow: 0 0 40px var(--primary); }
+        }
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .fade-out { opacity: 0; visibility: hidden; }
+
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: linear-gradient(135deg, var(--bg) 20%, var(--secondary) 150%); opacity: 0.4; }
 
         nav { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); background: var(--glass); backdrop-filter: var(--blur); padding: 8px 20px; border-radius: 100px; display: flex; gap: 10px; align-items: center; border: 1px solid var(--card-border); z-index: 1000; box-shadow: var(--shadow); width: max-content; }
@@ -84,6 +116,14 @@
     </style>
 </head>
 <body>
+    <div id="preloader">
+        <img src="https://i.ibb.co/wh6rcMjT/FB-IMG-1774107258833.jpg" alt="Logo" class="loader-logo">
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.7rem; letter-spacing: 3px; opacity: 0.5;">LOADING...</p>
+    </div>
+
     <div class="liquid-bg"></div>
 
     <nav>
@@ -97,11 +137,9 @@
         <div style="margin-top: 20px;">
             <p style="letter-spacing: 5px; opacity: 0.6; font-size: 0.8rem; margin-bottom: 15px;">WELCOME TO</p>
             <h1>MUSIC <span class="neon">NOOO</span></h1>
-            
             <div class="preview-wrapper">
                 <div class="preview-container" id="home-preview"></div>
             </div>
-            
             <a onclick="showPage('videos')" class="btn btn-main" style="padding: 15px 35px; border-radius: 50px; font-size: 0.9rem;">BROWSE MUSIC</a>
         </div>
     </section>
@@ -136,6 +174,14 @@
     </footer>
 
     <script>
+        // --- HIDE PRELOADER AFTER LOAD ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+            }, 1500); // 1.5 seconds loading animation
+        });
+
         let allVideos = [];
 
         function showPage(pageId) {
@@ -202,4 +248,4 @@
         }).catch(err => console.error("JSON Error:", err));
     </script>
 </body>
-    </html>
+        </html>
