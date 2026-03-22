@@ -65,8 +65,6 @@
 
         .waveform { display: flex; align-items: flex-end; gap: 3px; height: 30px; justify-content: center; margin-bottom: 15px; }
         .wave-bar { width: 3px; height: 100%; background: var(--primary); animation: wave 1s infinite alternate; border-radius: 10px; }
-        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
-        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
         @keyframes wave { from { height: 5px; } to { height: 30px; } }
 
         .trending-tag { position: absolute; top: 10px; right: 10px; background: #ff0055; color: #fff; font-size: 0.6rem; padding: 4px 10px; border-radius: 50px; font-weight: 700; box-shadow: 0 0 10px #ff0055; animation: blink 1s infinite; z-index: 5; }
@@ -78,7 +76,7 @@
         nav a.active { background: var(--primary); color: #000; }
         .theme-btn { width: 35px; height: 35px; background: var(--text); color: var(--bg); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; }
 
-        section { display: none; padding: 140px 20px 60px; text-align: center; max-width: 1200px; margin: 0 auto; animation: slideIn 0.6s ease; width: 100%; flex: 1; }
+        section { display: none; padding: 140px 20px 60px; text-align: center; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1; }
         section.active { display: block; }
 
         .hero h1 { font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 8vw, 5rem); margin-bottom: 20px; }
@@ -92,10 +90,9 @@
         .glass-card { position: relative; background: var(--glass); backdrop-filter: var(--blur); border-radius: 30px; padding: 20px; border: 1px solid var(--card-border); transition: 0.3s; text-align: left; }
         .glass-card img { width: 100%; border-radius: 20px; margin-bottom: 15px; }
         
-        /* --- FIXING BUTTON ICON CENTERING --- */
-        .btn { padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; cursor: pointer; text-decoration: none; border: none; height: 40px; }
+        .btn { padding: 10px 15px; border-radius: 12px; font-weight: 700; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; cursor: pointer; text-decoration: none; border: none; height: 40px; }
         .btn-main { background: var(--primary); color: #000; }
-        .btn-outline { border: 1.5px solid var(--primary); color: var(--primary); background: transparent; padding: 0; }
+        .btn-outline { border: 1.5px solid var(--primary); color: var(--primary); background: transparent; }
         .btn-outline:hover { background: var(--primary); color: #000; }
 
         .btn-whatsapp { color: #25D366; border: 1.5px solid #25D366; }
@@ -234,10 +231,11 @@
                     ${v.trending ? '<div class="trending-tag">TRENDING</div>' : ''}
                     <img src="${v.thumbnail}">
                     <h3 style="font-size: 0.9rem; margin-bottom: 15px;">${v.title}</h3>
-                    <div style="display:flex; gap: 8px;">
-                        <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:2; text-align:center;">WATCH</a>
-                        <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 45px;"><i class="fas fa-link"></i></button>
-                        <button onclick="shareWA('${v.title}', '${v.youtube_link}')" class="btn btn-outline btn-whatsapp" style="width: 45px;"><i class="fab fa-whatsapp"></i></button>
+                    <div style="display:flex; gap: 8px; flex-wrap: wrap;">
+                        <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:1.5; min-width:80px;">WATCH</a>
+                        <a href="${v.download_link}" target="_blank" class="btn btn-outline" style="flex:1; min-width:60px;">MP3</a>
+                        <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 40px;"><i class="fas fa-link"></i></button>
+                        <button onclick="shareWA('${v.title}', '${v.youtube_link}')" class="btn btn-outline btn-whatsapp" style="width: 40px;"><i class="fab fa-whatsapp"></i></button>
                     </div>
                 </div>`).join('');
             setTimeout(reveal, 100);
@@ -260,4 +258,4 @@
         });
     </script>
 </body>
-                </html>
+        </html>
