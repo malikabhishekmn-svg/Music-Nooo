@@ -47,12 +47,16 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* --- BACK TO TOP ARROW --- */
+        #backToTop { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--primary); color: #000; border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; z-index: 2000; box-shadow: 0 0 20px var(--primary); transition: 0.3s; border: none; font-size: 1.2rem; }
+        #backToTop:hover { transform: translateY(-5px); background: #fff; }
+
         #toast {
             position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
             background: var(--glass); backdrop-filter: var(--blur);
             border: 1px solid var(--primary); color: var(--text);
             padding: 12px 25px; border-radius: 50px; font-size: 0.8rem;
-            z-index: 2000; transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 2100; transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3); font-weight: 600;
         }
         #toast.show { bottom: 40px; }
@@ -61,10 +65,10 @@
         .cat-btn { padding: 8px 18px; border-radius: 50px; background: var(--glass); border: 1px solid var(--card-border); color: var(--text); cursor: pointer; font-size: 0.7rem; font-weight: 600; transition: 0.3s; }
         .cat-btn.active, .cat-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); box-shadow: 0 0 15px var(--primary); }
 
-        #backToTop { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: var(--primary); color: #000; border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; z-index: 1000; box-shadow: 0 0 20px var(--primary); transition: 0.3s; border: none; }
-
         .waveform { display: flex; align-items: flex-end; gap: 3px; height: 30px; justify-content: center; margin-bottom: 15px; }
         .wave-bar { width: 3px; height: 100%; background: var(--primary); animation: wave 1s infinite alternate; border-radius: 10px; }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
         @keyframes wave { from { height: 5px; } to { height: 30px; } }
 
         .trending-tag { position: absolute; top: 10px; right: 10px; background: #ff0055; color: #fff; font-size: 0.6rem; padding: 4px 10px; border-radius: 50px; font-weight: 700; box-shadow: 0 0 10px #ff0055; animation: blink 1s infinite; z-index: 5; }
@@ -79,16 +83,17 @@
         section { display: none; padding: 140px 20px 60px; text-align: center; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1; }
         section.active { display: block; }
 
-        .hero h1 { font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 8vw, 5rem); margin-bottom: 20px; }
+        .hero h1 { font-family: 'Syncopate', sans-serif; font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 20px; }
         .neon { color: var(--primary); text-shadow: 0 0 20px var(--primary); }
 
         .search-container { position: relative; max-width: 400px; margin: 0 auto 20px; }
-        .search-bar { width: 100%; padding: 12px 20px 12px 45px; border-radius: 50px; background: var(--glass); border: 1px solid var(--card-border); color: var(--text); outline: none; }
+        .search-bar { width: 100%; padding: 12px 20px 12px 45px; border-radius: 50px; background: var(--glass); border: 1px solid var(--card-border); color: var(--text); outline: none; transition: 0.3s; }
+        .search-bar:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
         .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
         .glass-card { position: relative; background: var(--glass); backdrop-filter: var(--blur); border-radius: 30px; padding: 20px; border: 1px solid var(--card-border); transition: 0.3s; text-align: left; }
-        .glass-card img { width: 100%; border-radius: 20px; margin-bottom: 15px; }
+        .glass-card img { width: 100%; border-radius: 20px; margin-bottom: 15px; object-fit: cover; aspect-ratio: 16/9; }
         
         .btn { padding: 10px 15px; border-radius: 12px; font-weight: 700; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; cursor: pointer; text-decoration: none; border: none; height: 40px; }
         .btn-main { background: var(--primary); color: #000; }
@@ -99,6 +104,8 @@
         .btn-whatsapp:hover { background: #25D366; color: #fff; }
 
         .footer-section { margin-top: auto; padding: 30px 20px; background: var(--glass); border-top: 1px solid var(--card-border); text-align: center; font-size: 0.8rem; }
+        .contact-links a { font-size: 1.8rem; color: var(--text); transition: 0.3s; margin: 0 12.5px; }
+        .contact-links a:hover { color: var(--primary); transform: scale(1.2); }
     </style>
 </head>
 <body>
@@ -110,6 +117,7 @@
     </div>
 
     <button id="backToTop" onclick="window.scrollTo(0,0)"><i class="fas fa-arrow-up"></i></button>
+    
     <div class="liquid-bg"></div>
 
     <nav>
@@ -127,7 +135,7 @@
         <div class="grid" id="featured-grid" style="margin-bottom: 30px;">
             <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
         </div>
-        <a onclick="showPage('videos')" class="btn btn-main" style="padding: 15px 35px; border-radius: 50px; margin: 0 auto;">BROWSE MUSIC</a>
+        <a onclick="showPage('videos')" class="btn btn-main" style="padding: 15px 35px; border-radius: 50px; margin: 0 auto; width: max-content;">BROWSE MUSIC</a>
     </section>
 
     <section id="videos">
@@ -152,10 +160,10 @@
             <h2 class="neon">CONTACT</h2><br>
             <p id="latest-info"></p><br>
             <h3 id="c-email" style="color: var(--primary);"></h3><br>
-            <div style="font-size: 1.8rem; display: flex; justify-content: center; gap: 25px; margin-top: 20px;">
-                <a href="https://youtube.com/@MusicNooo" target="_blank" style="color: var(--text);"><i class="fab fa-youtube"></i></a>
-                <a href="https://instagram.com/abhishek_malik28" target="_blank" style="color: var(--text);"><i class="fab fa-instagram"></i></a>
-                <a href="https://facebook.com/Malik.Abhishek28" target="_blank" style="color: var(--text);"><i class="fab fa-facebook"></i></a>
+            <div class="contact-links">
+                <a href="https://youtube.com/@MusicNooo" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://instagram.com/abhishek_malik28" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com/Malik.Abhishek28" target="_blank"><i class="fab fa-facebook"></i></a>
             </div>
         </div>
     </section>
@@ -168,10 +176,12 @@
         let allVideos = [];
         let currentCategory = 'All';
 
+        // 1. Dark Mode Logic
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
-            document.getElementById('t-icon').className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            const icon = document.getElementById('t-icon');
+            if(icon) icon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
         }
         initTheme();
 
@@ -180,37 +190,57 @@
             const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            document.getElementById('t-icon').className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            const icon = document.getElementById('t-icon');
+            if(icon) icon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
         }
 
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
+        // 2. Scroll Reveal & Back to Top Logic
+        function handleScroll() {
+            // Reveal animations
+            const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(r => {
-                var windowHeight = window.innerHeight;
-                var elementTop = r.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                const elementTop = r.getBoundingClientRect().top;
                 if (elementTop < windowHeight - 100) r.classList.add("active");
             });
-        }
-        window.addEventListener("scroll", reveal);
 
+            // Show/Hide Back to Top button
+            const btt = document.getElementById("backToTop");
+            if (window.scrollY > 300) {
+                btt.style.display = "flex";
+            } else {
+                btt.style.display = "none";
+            }
+        }
+        window.addEventListener("scroll", handleScroll);
+
+        // 3. Preloader
         window.addEventListener('load', () => {
-            setTimeout(() => document.getElementById('preloader').classList.add('fade-out'), 1500);
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                if(preloader) preloader.classList.add('fade-out');
+            }, 1500);
         });
 
+        // 4. Navigation
         function showPage(pageId) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            document.getElementById('nav-' + pageId).classList.add('active');
+            const target = document.getElementById(pageId);
+            const navLink = document.getElementById('nav-' + pageId);
+            if(target) target.classList.add('active');
+            if(navLink) navLink.classList.add('active');
             window.scrollTo(0, 0);
-            setTimeout(reveal, 100);
+            setTimeout(handleScroll, 200);
         }
 
+        // 5. Actions
         function copyLink(link) {
-            navigator.clipboard.writeText(link);
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            navigator.clipboard.writeText(link).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            });
         }
 
         function shareWA(title, link) {
@@ -218,58 +248,75 @@
             window.open(`https://wa.me/?text=${text}`, '_blank');
         }
 
+        // 6. Filtering
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText === cat);
+            });
+            filterMusic();
+        }
+
         function filterMusic() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allVideos.filter(v => (currentCategory === 'All' || v.category === currentCategory) && v.title.toLowerCase().includes(query));
+            const filtered = allVideos.filter(v => 
+                (currentCategory === 'All' || v.category === currentCategory) && 
+                v.title.toLowerCase().includes(query)
+            );
             renderVideos(filtered);
         }
 
+        // 7. Rendering
         function renderVideos(videoList) {
             const container = document.getElementById('video-container');
+            if(!container) return;
+
             container.innerHTML = videoList.map(v => `
                 <div class="glass-card reveal">
                     ${v.trending ? '<div class="trending-tag">TRENDING</div>' : ''}
-                    <img src="${v.thumbnail}">
-                    <h3 style="font-size: 0.9rem; margin-bottom: 15px;">${v.title}</h3>
+                    <img src="${v.thumbnail}" alt="${v.title}">
+                    <h3 style="font-size: 0.9rem; margin-bottom: 15px; height: 40px; overflow: hidden;">${v.title}</h3>
                     <div style="display:flex; gap: 8px; flex-wrap: wrap;">
                         <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:1.5; min-width:80px;">WATCH</a>
-                        <a href="${v.download_link}" target="_blank" class="btn btn-outline" style="flex:1; min-width:60px;">MP3</a>
-                        <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 40px;"><i class="fas fa-link"></i></button>
-                        <button onclick="shareWA('${v.title}', '${v.youtube_link}')" class="btn btn-outline btn-whatsapp" style="width: 40px;"><i class="fab fa-whatsapp"></i></button>
+                        
+                        ${v.download_link ? `
+                            <a href="${v.download_link}" download="${v.title}.mp3" target="_blank" class="btn btn-outline" style="flex:1; min-width:60px;">MP3</a>
+                        ` : ''}
+                        
+                        <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 45px; padding:0;"><i class="fas fa-link"></i></button>
+                        <button onclick="shareWA('${v.title}', '${v.youtube_link}')" class="btn btn-outline btn-whatsapp" style="width: 45px; padding:0;"><i class="fab fa-whatsapp"></i></button>
                     </div>
                 </div>`).join('');
-            setTimeout(reveal, 100);
+            setTimeout(handleScroll, 100);
         }
 
-        fetch('/videos.json').then(res => res.json()).then(data => {
-            allVideos = data.videos;
-            const featured = data.videos.slice(0, 3);
-            document.getElementById('featured-grid').innerHTML = featured.map(v => `
-                <div class="glass-card reveal">
-                    <img src="${v.thumbnail}">
-                    <p style="font-size:0.7rem;">${v.title}</p>
-                </div>
-            `).join('');
-            
-            function renderVideos(videoList) {
-    const container = document.getElementById('video-container');
-    container.innerHTML = videoList.map(v => `
-        <div class="glass-card reveal">
-            ${v.trending ? '<div class="trending-tag">TRENDING</div>' : ''}
-            <img src="${v.thumbnail}">
-            <h3 style="font-size: 0.9rem; margin-bottom: 15px;">${v.title}</h3>
-            <div style="display:flex; gap: 8px; flex-wrap: wrap;">
-                <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:1.5; min-width:80px;">WATCH</a>
+        // 8. Load Data
+        fetch('./videos.json')
+            .then(res => res.json())
+            .then(data => {
+                allVideos = data.videos;
                 
-                <a href="${v.download_link}" download="${v.title}.mp3" target="_blank" class="btn btn-outline" style="flex:1; min-width:60px;">MP3</a>
+                // Featured on Home
+                const featuredGrid = document.getElementById('featured-grid');
+                if(featuredGrid) {
+                    const featured = data.videos.slice(0, 3);
+                    featuredGrid.innerHTML = featured.map(v => `
+                        <div class="glass-card reveal">
+                            <img src="${v.thumbnail}">
+                            <p style="font-size:0.7rem; margin-top:5px; text-align:center;">${v.title}</p>
+                        </div>
+                    `).join('');
+                }
                 
-                <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 45px;"><i class="fas fa-link"></i></button>
-                <button onclick="shareWA('${v.title}', '${v.youtube_link}')" class="btn btn-outline btn-whatsapp" style="width: 45px;"><i class="fab fa-whatsapp"></i></button>
-            </div>
-        </div>`).join('');
-    setTimeout(reveal, 100);
-        }
-        });
+                renderVideos(allVideos);
+                
+                // Content Update
+                if(document.getElementById('c-email')) document.getElementById('c-email').innerText = data.contact.email;
+                if(document.getElementById('latest-info')) document.getElementById('latest-info').innerText = data.home_text;
+                
+                setTimeout(handleScroll, 500);
+            })
+            .catch(err => console.error("JSON Error:", err));
     </script>
 </body>
-        </html>
+            </html>
