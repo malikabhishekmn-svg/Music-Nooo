@@ -23,10 +23,6 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
-        /* --- 4. CUSTOM CURSOR --- */
-        body { cursor: none; }
-        #cursor { width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 99999; transition: transform 0.1s ease; box-shadow: 0 0 15px var(--primary); }
-
         html, body { 
             margin: 0; padding: 0; width: 100%; min-height: 100vh;
             background-color: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif;
@@ -44,15 +40,23 @@
         @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
         .fade-out { opacity: 0; visibility: hidden; }
 
-        /* --- CATEGORY BUTTONS --- */
+        /* --- GLASS TOAST NOTIFICATION --- */
+        #toast {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background: var(--glass); backdrop-filter: var(--blur);
+            border: 1px solid var(--primary); color: var(--text);
+            padding: 12px 25px; border-radius: 50px; font-size: 0.8rem;
+            z-index: 2000; transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); font-weight: 600;
+        }
+        #toast.show { bottom: 40px; }
+
         .categories { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
         .cat-btn { padding: 8px 18px; border-radius: 50px; background: var(--glass); border: 1px solid var(--card-border); color: var(--text); cursor: pointer; font-size: 0.7rem; font-weight: 600; transition: 0.3s; }
         .cat-btn.active, .cat-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); box-shadow: 0 0 15px var(--primary); }
 
-        /* --- BACK TO TOP --- */
         #backToTop { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: var(--primary); color: #000; border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; z-index: 1000; box-shadow: 0 0 20px var(--primary); transition: 0.3s; border: none; }
 
-        /* --- 1. WAVEFORM ANIMATION --- */
         .waveform { display: flex; align-items: flex-end; gap: 3px; height: 30px; justify-content: center; margin-bottom: 15px; }
         .wave-bar { width: 3px; height: 100%; background: var(--primary); animation: wave 1s infinite alternate; border-radius: 10px; }
         .wave-bar:nth-child(2) { animation-delay: 0.2s; }
@@ -60,7 +64,6 @@
         .wave-bar:nth-child(4) { animation-delay: 0.1s; }
         @keyframes wave { from { height: 5px; } to { height: 30px; } }
 
-        /* --- 3. TRENDING LABEL --- */
         .trending-tag { position: absolute; top: 10px; right: 10px; background: #ff0055; color: #fff; font-size: 0.6rem; padding: 4px 10px; border-radius: 50px; font-weight: 700; box-shadow: 0 0 10px #ff0055; animation: blink 1s infinite; z-index: 5; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
@@ -94,7 +97,6 @@
         .btn-main { background: var(--primary); color: #000; }
         .btn-outline { border: 1.5px solid var(--primary); color: var(--text); margin-left: 5px; }
 
-        /* --- CONTACT STYLES --- */
         .contact-links { font-size: 1.8rem; display: flex; justify-content: center; gap: 25px; margin-top: 20px; }
         .contact-links a { color: var(--text); transition: 0.3s; }
         .contact-links a:hover { color: var(--primary); transform: scale(1.2); }
@@ -103,7 +105,7 @@
     </style>
 </head>
 <body>
-    <div id="cursor"></div>
+    <div id="toast"><i class="fas fa-check-circle"></i> &nbsp; Link Copied!</div>
 
     <div id="preloader">
         <img src="https://i.ibb.co/wh6rcMjT/FB-IMG-1774107258833.jpg" class="loader-logo">
@@ -167,13 +169,6 @@
         let allVideos = [];
         let currentCategory = 'All';
 
-        // --- 4. CURSOR SCRIPT ---
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
         window.addEventListener('load', () => {
             setTimeout(() => document.getElementById('preloader').classList.add('fade-out'), 1500);
         });
@@ -190,11 +185,18 @@
             window.scrollTo(0, 0);
         }
 
-        // --- 2. COPY LINK FUNCTION ---
+        /* --- IMPROVED COPY FUNCTION WITH GLASS TOAST --- */
         function copyLink(link) {
-            navigator.clipboard.writeText(link).then(() => {
-                alert("Link Copied to Clipboard!");
-            });
+            const el = document.createElement('textarea');
+            el.value = link;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         function filterCategory(cat) {
@@ -216,10 +218,10 @@
                     ${v.trending ? '<div class="trending-tag">TRENDING</div>' : ''}
                     <img src="${v.thumbnail}">
                     <h3 style="font-size: 0.9rem; margin-bottom: 15px;">${v.title}</h3>
-                    <div style="display:flex; gap: 5px; flex-wrap: wrap;">
-                        <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:1;">WATCH</a>
-                        <a href="${v.download_link}" class="btn btn-outline" style="flex:1;">MP3</a>
-                        <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 40px; margin-left:0;" title="Copy Link"><i class="fas fa-link"></i></button>
+                    <div style="display:flex; gap: 5px;">
+                        <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:1; text-align:center;">WATCH</a>
+                        <a href="${v.download_link}" class="btn btn-outline" style="flex:1; text-align:center;">MP3</a>
+                        <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 45px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-link"></i></button>
                     </div>
                 </div>`).join('');
         }
