@@ -196,7 +196,6 @@
 
         // 2. Scroll Reveal & Back to Top Logic
         function handleScroll() {
-            // Reveal animations
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(r => {
                 const windowHeight = window.innerHeight;
@@ -204,7 +203,6 @@
                 if (elementTop < windowHeight - 100) r.classList.add("active");
             });
 
-            // Show/Hide Back to Top button
             const btt = document.getElementById("backToTop");
             if (window.scrollY > 300) {
                 btt.style.display = "flex";
@@ -237,15 +235,41 @@
         // 5. Actions
         function copyLink(link) {
             navigator.clipboard.writeText(link).then(() => {
-                const toast = document.getElementById('toast');
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
+                showToast("Link Copied!");
             });
         }
 
         function shareWA(title, link) {
             const text = encodeURIComponent(`Check out this music: ${title}\n\n${link}`);
             window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        // *** අලුත්: Force Download Function ***
+        async function downloadMP3(url, filename) {
+            showToast("Downloading Started...");
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename + ".mp3";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(blobUrl);
+            } catch (error) {
+                console.error("Download failed:", error);
+                // Fetch එක වැඩ නොකළොත් සාමාන්‍ය විදිහට open කරනවා
+                window.open(url, '_blank');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         // 6. Filtering
@@ -266,7 +290,7 @@
             renderVideos(filtered);
         }
 
-        // 7. Rendering
+        // 7. Rendering (මෙතන download_link වෙනුවට download_url ලෙස වෙනස් කර ඇත)
         function renderVideos(videoList) {
             const container = document.getElementById('video-container');
             if(!container) return;
@@ -279,8 +303,8 @@
                     <div style="display:flex; gap: 8px; flex-wrap: wrap;">
                         <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:1.5; min-width:80px;">WATCH</a>
                         
-                        ${v.download_link ? `
-                            <a href="${v.download_link}" download="${v.title}.mp3" target="_blank" class="btn btn-outline" style="flex:1; min-width:60px;">MP3</a>
+                        ${v.download_url ? `
+                            <button onclick="downloadMP3('${v.download_url}', '${v.title}')" class="btn btn-outline" style="flex:1; min-width:60px;">MP3</button>
                         ` : ''}
                         
                         <button onclick="copyLink('${v.youtube_link}')" class="btn btn-outline" style="width: 45px; padding:0;"><i class="fas fa-link"></i></button>
@@ -295,8 +319,6 @@
             .then(res => res.json())
             .then(data => {
                 allVideos = data.videos;
-                
-                // Featured on Home
                 const featuredGrid = document.getElementById('featured-grid');
                 if(featuredGrid) {
                     const featured = data.videos.slice(0, 3);
@@ -307,16 +329,12 @@
                         </div>
                     `).join('');
                 }
-                
                 renderVideos(allVideos);
-                
-                // Content Update
                 if(document.getElementById('c-email')) document.getElementById('c-email').innerText = data.contact.email;
                 if(document.getElementById('latest-info')) document.getElementById('latest-info').innerText = data.home_text;
-                
                 setTimeout(handleScroll, 500);
             })
             .catch(err => console.error("JSON Error:", err));
     </script>
 </body>
-            </html>
+</html>
