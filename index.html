@@ -56,10 +56,17 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-        /* ===== PREMIUM ANIMATED BACKGROUND ===== */
-        #particles-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0; pointer-events: none; opacity: 0.6;
+        /* ===== LIQUID THEME ANIMATION BACKGROUND ===== */
+        #liquid-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
         }
 
         /* ===== PRELOADER ===== */
@@ -113,7 +120,6 @@
             padding: 14px 30px; border-radius: 60px; font-size: 0.85rem;
             z-index: 2100; transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             box-shadow: var(--shadow); font-weight: 600;
-            border: 1px solid var(--primary);
         }
         #toast.show { bottom: 40px; }
 
@@ -379,19 +385,82 @@
             color: var(--primary); transform: translateY(-5px) scale(1.1);
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 600px) {
-            nav { padding: 4px 10px; gap: 4px; top: 12px; flex-wrap: nowrap; overflow-x: auto; width: 95%; border-radius: 60px; }
-            nav a { font-size: 0.5rem; padding: 8px 12px; white-space: nowrap; }
-            .theme-btn { width: 30px; height: 30px; font-size: 0.7rem; }
-            section { padding: 110px 15px 40px; }
-            .glass-card { padding: 16px; }
-            .grid { grid-template-columns: 1fr; gap: 18px; }
-            .btn { font-size: 0.65rem; height: 36px; }
+        /* ===== RESPONSIVE (Phone, Laptop, Desktop) ===== */
+        /* ===== RESPONSIVE FOR MOBILE (Phone) ===== */
+/* ===== RESPONSIVE FOR MOBILE (Phone) ===== */
+/* ===== RESPONSIVE FOR MOBILE (Phone) ===== */
+@media (max-width: 600px) {
+    /* Navigation adjustments */
+    nav {
+        padding: 5px 10px; /* Padding reduced */
+        gap: 3px; /* Gap between buttons reduced to 3px */
+        top: 12px;
+        width: 92%; /* Adjust this to control side spacing */
+        max-width: 450px; /* Limits max width on larger phones */
+        border-radius: 60px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: center; /* Centers buttons instead of spreading them */
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    nav a {
+        font-size: 0.55rem; /* Slightly smaller font */
+        padding: 8px 12px; /* Padding inside buttons reduced */
+        white-space: nowrap;
+        letter-spacing: 0.5px;
+        flex-shrink: 0;
+        border-radius: 40px;
+    }
+    
+    .theme-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.6rem;
+        flex-shrink: 0;
+        margin-left: 5px; /* Small gap before theme button */
+    }
+
+    /* Section spacing */
+    section {
+        padding: 100px 12px 30px;
+    }
+
+    /* Cards */
+    .glass-card {
+        padding: 14px;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .btn {
+        font-size: 0.6rem;
+        height: 34px;
+        padding: 6px 12px;
+    }
+
+    /* Background logo adjustments */
+    #bg-logo-container .bg-logo-box {
+        width: 180px;
+        height: 180px;
+    }
+    #bg-logo-container .bg-logo-img {
+        width: 100px;
+        height: 100px;
+    }
+}
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            #liquid-canvas { opacity: 0.25; }
         }
 
-        @media (min-width: 601px) and (max-width: 900px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
+        @media (min-width: 1025px) {
+            .grid { grid-template-columns: repeat(3, 1fr); }
+            #liquid-canvas { opacity: 0.35; }
         }
 
         /* ===== NOW PLAYING BAR (Premium Feature) ===== */
@@ -425,8 +494,8 @@
         </div>
     </div>
 
-    <!-- ===== PARTICLES BACKGROUND ===== -->
-    <canvas id="particles-canvas"></canvas>
+    <!-- ===== LIQUID THEME BACKGROUND ===== -->
+    <canvas id="liquid-canvas"></canvas>
 
     <!-- ===== TOAST ===== -->
     <div id="toast">✨ Copied!</div>
@@ -517,74 +586,51 @@
     <!-- ===== JAVASCRIPT ===== -->
     <script>
         // ============================================================
-        // 1. PARTICLES BACKGROUND (Premium Feature)
+        // 1. LIQUID THEME ANIMATION (Premium)
         // ============================================================
-        (function initParticles() {
-            const canvas = document.getElementById('particles-canvas');
+        (function initLiquid() {
+            const canvas = document.getElementById('liquid-canvas');
             const ctx = canvas.getContext('2d');
-            let particles = [];
-            let w, h;
+            let width, height;
+            let time = 0;
 
             function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
             }
             window.addEventListener('resize', resize);
             resize();
 
-            const count = Math.min(80, Math.floor(window.innerWidth / 15));
+            function drawLiquid() {
+                time += 0.005;
+                ctx.clearRect(0, 0, width, height);
 
-            for (let i = 0; i < count; i++) {
-                particles.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    radius: Math.random() * 2 + 1,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    opacity: Math.random() * 0.4 + 0.1
-                });
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, w, h);
+                // Get primary color from CSS
                 const primary = getComputedStyle(document.documentElement)
                     .getPropertyValue('--primary').trim() || '#00f2ff';
 
-                particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    if (p.x < 0) p.x = w;
-                    if (p.x > w) p.x = 0;
-                    if (p.y < 0) p.y = h;
-                    if (p.y > h) p.y = 0;
-
+                // Draw 3 liquid waves
+                for (let i = 0; i < 3; i++) {
                     ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = primary;
-                    ctx.globalAlpha = p.opacity;
-                    ctx.fill();
-                    ctx.globalAlpha = 1;
+                    for (let x = 0; x < width; x += 2) {
+                        const y = height / 2 
+                            + Math.sin(x * 0.008 + time + i * 2) * 50 
+                            + Math.sin(x * 0.015 + time * 1.5 + i * 3) * 30 
+                            + Math.cos(x * 0.005 + time * 0.8 + i * 1.5) * 40;
+                        if (x === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.lineTo(width, height);
+                    ctx.lineTo(0, height);
+                    ctx.closePath();
 
-                    // Connect nearby particles
-                    particles.forEach(p2 => {
-                        const dx = p.x - p2.x;
-                        const dy = p.y - p2.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(p2.x, p2.y);
-                            ctx.strokeStyle = primary;
-                            ctx.globalAlpha = 0.06 * (1 - dist / 120);
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                            ctx.globalAlpha = 1;
-                        }
-                    });
-                });
-                requestAnimationFrame(draw);
+                    ctx.fillStyle = primary;
+                    ctx.globalAlpha = 0.08 + (i * 0.03);
+                    ctx.fill();
+                }
+                requestAnimationFrame(drawLiquid);
             }
-            draw();
+            drawLiquid();
         })();
 
         // ============================================================
