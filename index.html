@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUSIC NOOO — Premium</title>
+    <title>MUSIC NOOO</title>
     <link rel="icon" type="image/png" href="https://i.ibb.co/wh6rcMjT/FB-IMG-1774107258833.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -27,18 +27,21 @@
             --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* ===== LIGHT THEME - MODERN & PREMIUM ===== */
         [data-theme="light"] {
-            --primary: #0066ff;
-            --primary-dim: rgba(0, 102, 255, 0.12);
-            --secondary: #6200ea;
-            --bg: #f0f2f8;
-            --text: #0f0f1a;
-            --glass: rgba(255, 255, 255, 0.6);
-            --glass-hover: rgba(255, 255, 255, 0.85);
+            --primary: #2563eb;        /* Royal Blue - vibrant */
+            --primary-dim: rgba(37, 99, 235, 0.12);
+            --secondary: #7c3aed;      /* Purple accent */
+            --bg: #f1f5f9;             /* Soft slate gray */
+            --text: #0f172a;           /* Dark navy */
+            
+            --glass: rgba(255, 255, 255, 0.75);
+            --glass-hover: rgba(255, 255, 255, 0.95);
             --card-border: rgba(0, 0, 0, 0.06);
-            --card-border-hover: rgba(0, 102, 255, 0.3);
-            --shadow: 0 20px 50px rgba(0,0,0,0.08);
-            --glow: 0 0 40px rgba(0, 102, 255, 0.1);
+            --card-border-hover: rgba(37, 99, 235, 0.25);
+            
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+            --glow: 0 0 40px rgba(37, 99, 235, 0.08);
         }
 
         /* ===== RESET & BASE ===== */
@@ -65,15 +68,14 @@
             height: 100vh;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.3;
+            opacity: 0.2;
             transition: opacity 0.5s ease;
         }
 
-        /* ===== PRELOADER ===== */
+        /* ===== CUSTOM PRELOADER ===== */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999;
+            background: var(--bg); display: flex; justify-content: center; align-items: center; z-index: 9999;
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
         #preloader.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -145,8 +147,20 @@
             transition: var(--transition); transform: translateX(-50%);
         }
         nav a:hover::after, nav a.active::after { width: 60%; }
-        nav a.active { background: var(--primary); color: #000; }
+        nav a.active { background: var(--primary); color: #fff; }
         nav a.active::after { display: none; }
+
+        /* Light theme nav specific */
+        [data-theme="light"] nav {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+        }
+        [data-theme="light"] nav a { color: #334155; }
+        [data-theme="light"] nav a.active { color: #ffffff; }
+        [data-theme="light"] .theme-btn {
+            background: #e2e8f0; color: #0f172a;
+        }
 
         .theme-btn {
             width: 36px; height: 36px; background: var(--text);
@@ -218,7 +232,7 @@
             100% { transform: scaleY(1); opacity: 1; }
         }
 
-        /* ===== GLASS CARDS (Premium) ===== */
+        /* ===== GLASS CARDS ===== */
         .glass-card {
             position: relative;
             background: var(--glass);
@@ -259,6 +273,9 @@
         }
         .glass-card:hover img { transform: scale(1.02); }
 
+        /* Light theme card text fix */
+        [data-theme="light"] .glass-card h3 { color: #0f172a; }
+
         /* ===== CATEGORY BUTTONS ===== */
         .categories {
             display: flex; justify-content: center; gap: 10px;
@@ -272,11 +289,13 @@
             letter-spacing: 1px;
         }
         .cat-btn.active, .cat-btn:hover {
-            background: var(--primary); color: #000;
+            background: var(--primary); color: #fff;
             border-color: var(--primary);
             box-shadow: 0 0 25px var(--primary);
             transform: scale(1.05);
         }
+        [data-theme="light"] .cat-btn.active { color: #ffffff; }
+        [data-theme="light"] .cat-btn { color: #334155; }
 
         /* ===== SEARCH ===== */
         .search-container {
@@ -297,6 +316,11 @@
             position: absolute; left: 18px; top: 50%;
             transform: translateY(-50%); opacity: 0.5;
         }
+        [data-theme="light"] .search-bar {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
+        }
 
         /* ===== BUTTONS ===== */
         .btn {
@@ -308,7 +332,7 @@
             gap: 6px; flex: 1; min-width: 60px;
         }
         .btn-main {
-            background: var(--primary); color: #000;
+            background: var(--primary); color: #fff;
             box-shadow: 0 4px 20px var(--primary-dim);
         }
         .btn-main:hover {
@@ -320,7 +344,7 @@
             color: var(--primary); background: transparent;
         }
         .btn-outline:hover {
-            background: var(--primary); color: #000;
+            background: var(--primary); color: #fff;
             transform: translateY(-2px);
         }
         .btn-whatsapp { color: #25D366; border: 1.5px solid #25D366; }
@@ -328,6 +352,8 @@
         .btn-icon {
             width: 40px; padding: 0; flex: 0 0 40px;
         }
+        [data-theme="light"] .btn-main { color: #ffffff; }
+        [data-theme="light"] .btn-outline:hover { color: #ffffff; }
 
         /* ===== TRENDING TAG ===== */
         .trending-tag {
@@ -385,85 +411,34 @@
             color: var(--primary); transform: translateY(-5px) scale(1.1);
         }
 
-        /* ===== RESPONSIVE (Phone, Laptop, Desktop) ===== */
-        /* ===== RESPONSIVE FOR MOBILE (Phone) ===== */
-/* ===== RESPONSIVE FOR MOBILE (Phone) ===== */
-/* ===== RESPONSIVE FOR MOBILE (Phone) ===== */
-@media (max-width: 600px) {
-    /* Navigation adjustments */
-    nav {
-        padding: 5px 10px; /* Padding reduced */
-        gap: 3px; /* Gap between buttons reduced to 3px */
-        top: 12px;
-        width: 92%; /* Adjust this to control side spacing */
-        max-width: 450px; /* Limits max width on larger phones */
-        border-radius: 60px;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        justify-content: center; /* Centers buttons instead of spreading them */
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    nav a {
-        font-size: 0.55rem; /* Slightly smaller font */
-        padding: 8px 12px; /* Padding inside buttons reduced */
-        white-space: nowrap;
-        letter-spacing: 0.5px;
-        flex-shrink: 0;
-        border-radius: 40px;
-    }
-    
-    .theme-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 0.6rem;
-        flex-shrink: 0;
-        margin-left: 5px; /* Small gap before theme button */
-    }
+        /* ===== RESPONSIVE (Mobile) ===== */
+        @media (max-width: 600px) {
+            nav {
+                padding: 5px 10px; gap: 3px; top: 12px;
+                width: 92%; max-width: 450px; border-radius: 60px;
+                flex-wrap: nowrap; overflow-x: auto;
+                justify-content: center; left: 50%; transform: translateX(-50%);
+            }
+            nav a { font-size: 0.55rem; padding: 8px 12px; white-space: nowrap; letter-spacing: 0.5px; flex-shrink: 0; border-radius: 40px; }
+            .theme-btn { width: 28px; height: 28px; font-size: 0.6rem; flex-shrink: 0; margin-left: 5px; }
+            section { padding: 100px 12px 30px; }
+            .glass-card { padding: 14px; }
+            .grid { grid-template-columns: 1fr; gap: 15px; }
+            .btn { font-size: 0.6rem; height: 34px; padding: 6px 12px; }
+            #liquid-canvas { opacity: 0.15; }
+        }
 
-    /* Section spacing */
-    section {
-        padding: 100px 12px 30px;
-    }
-
-    /* Cards */
-    .glass-card {
-        padding: 14px;
-    }
-    
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .btn {
-        font-size: 0.6rem;
-        height: 34px;
-        padding: 6px 12px;
-    }
-
-    /* Background logo adjustments */
-    #bg-logo-container .bg-logo-box {
-        width: 180px;
-        height: 180px;
-    }
-    #bg-logo-container .bg-logo-img {
-        width: 100px;
-        height: 100px;
-    }
-}
         @media (min-width: 601px) and (max-width: 1024px) {
             .grid { grid-template-columns: repeat(2, 1fr); }
-            #liquid-canvas { opacity: 0.25; }
+            #liquid-canvas { opacity: 0.2; }
         }
 
         @media (min-width: 1025px) {
             .grid { grid-template-columns: repeat(3, 1fr); }
-            #liquid-canvas { opacity: 0.35; }
+            #liquid-canvas { opacity: 0.25; }
         }
 
-        /* ===== NOW PLAYING BAR (Premium Feature) ===== */
+        /* ===== NOW PLAYING BAR ===== */
         .now-playing {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: var(--glass); backdrop-filter: var(--blur);
@@ -494,7 +469,7 @@
         </div>
     </div>
 
-    <!-- ===== LIQUID THEME BACKGROUND ===== -->
+    <!-- ===== LIQUID BACKGROUND ===== -->
     <canvas id="liquid-canvas"></canvas>
 
     <!-- ===== TOAST ===== -->
@@ -585,14 +560,11 @@
     <!-- ============================================================ -->
     <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ============================================================
-        // 1. LIQUID THEME ANIMATION (Premium)
-        // ============================================================
+        // ===== LIQUID BACKGROUND =====
         (function initLiquid() {
             const canvas = document.getElementById('liquid-canvas');
             const ctx = canvas.getContext('2d');
-            let width, height;
-            let time = 0;
+            let width, height, time = 0;
 
             function resize() {
                 width = canvas.width = window.innerWidth;
@@ -604,26 +576,17 @@
             function drawLiquid() {
                 time += 0.005;
                 ctx.clearRect(0, 0, width, height);
-
-                // Get primary color from CSS
-                const primary = getComputedStyle(document.documentElement)
-                    .getPropertyValue('--primary').trim() || '#00f2ff';
-
-                // Draw 3 liquid waves
+                const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#00f2ff';
                 for (let i = 0; i < 3; i++) {
                     ctx.beginPath();
                     for (let x = 0; x < width; x += 2) {
-                        const y = height / 2 
-                            + Math.sin(x * 0.008 + time + i * 2) * 50 
-                            + Math.sin(x * 0.015 + time * 1.5 + i * 3) * 30 
-                            + Math.cos(x * 0.005 + time * 0.8 + i * 1.5) * 40;
+                        const y = height / 2 + Math.sin(x * 0.008 + time + i * 2) * 50 + Math.sin(x * 0.015 + time * 1.5 + i * 3) * 30 + Math.cos(x * 0.005 + time * 0.8 + i * 1.5) * 40;
                         if (x === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
                     }
                     ctx.lineTo(width, height);
                     ctx.lineTo(0, height);
                     ctx.closePath();
-
                     ctx.fillStyle = primary;
                     ctx.globalAlpha = 0.08 + (i * 0.03);
                     ctx.fill();
@@ -633,9 +596,7 @@
             drawLiquid();
         })();
 
-        // ============================================================
-        // 2. THEME
-        // ============================================================
+        // ===== THEME =====
         function initTheme() {
             const saved = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', saved);
@@ -646,39 +607,29 @@
 
         function toggleTheme() {
             const body = document.documentElement;
-            const current = body.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
+            const next = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             body.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
             const icon = document.getElementById('t-icon');
             if (icon) icon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
         }
 
-        // ============================================================
-        // 3. PRELOADER
-        // ============================================================
+        // ===== PRELOADER =====
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('fade-out');
-            }, 1800);
+            setTimeout(() => document.getElementById('preloader').classList.add('fade-out'), 1800);
         });
 
-        // ============================================================
-        // 4. SCROLL REVEAL + BACK TO TOP
-        // ============================================================
+        // ===== SCROLL REVEAL + BACK TO TOP =====
         function handleScroll() {
             document.querySelectorAll('.reveal').forEach(el => {
-                const top = el.getBoundingClientRect().top;
-                if (top < window.innerHeight - 80) el.classList.add('active');
+                if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('active');
             });
             const btt = document.getElementById('backToTop');
             btt.style.display = window.scrollY > 300 ? 'flex' : 'none';
         }
         window.addEventListener('scroll', handleScroll);
 
-        // ============================================================
-        // 5. NAVIGATION
-        // ============================================================
+        // ===== NAVIGATION =====
         function showPage(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
@@ -688,9 +639,7 @@
             setTimeout(handleScroll, 300);
         }
 
-        // ============================================================
-        // 6. TOAST
-        // ============================================================
+        // ===== TOAST =====
         function showToast(msg) {
             const t = document.getElementById('toast');
             t.innerText = msg;
@@ -699,18 +648,13 @@
             t._timer = setTimeout(() => t.classList.remove('show'), 2800);
         }
 
-        // ============================================================
-        // 7. ACTIONS
-        // ============================================================
+        // ===== ACTIONS =====
         function copyLink(link) {
             navigator.clipboard.writeText(link).then(() => showToast('✨ Link Copied!'));
         }
-
         function shareWA(title, link) {
-            const text = encodeURIComponent(`🎵 ${title}\n\n${link}`);
-            window.open(`https://wa.me/?text=${text}`, '_blank');
+            window.open(`https://wa.me/?text=${encodeURIComponent(`🎵 ${title}\n\n${link}`)}`, '_blank');
         }
-
         async function downloadMP3(url, title) {
             showToast('⬇️ Downloading...');
             try {
@@ -725,42 +669,25 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(blobUrl);
                 showToast('✅ Downloaded!');
-            } catch {
-                window.open(url, '_blank');
-                showToast('⬇️ Download started in new tab');
-            }
+            } catch { window.open(url, '_blank'); showToast('⬇️ Download started in new tab'); }
         }
 
-        // ============================================================
-        // 8. FILTERS
-        // ============================================================
-        let allVideos = [];
-        let currentCategory = 'All';
-
+        // ===== FILTERS =====
+        let allVideos = [], currentCategory = 'All';
         function filterCategory(cat) {
             currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(b => {
-                b.classList.toggle('active', b.innerText === cat);
-            });
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.innerText === cat));
             filterMusic();
         }
-
         function filterMusic() {
             const q = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allVideos.filter(v =>
-                (currentCategory === 'All' || v.category === currentCategory) &&
-                v.title.toLowerCase().includes(q)
-            );
-            renderVideos(filtered);
+            renderVideos(allVideos.filter(v => (currentCategory === 'All' || v.category === currentCategory) && v.title.toLowerCase().includes(q)));
         }
 
-        // ============================================================
-        // 9. RENDER
-        // ============================================================
+        // ===== RENDER =====
         function renderVideos(list) {
             const container = document.getElementById('video-container');
             if (!container) return;
-
             container.innerHTML = list.map(v => `
                 <div class="glass-card reveal" onclick="showNowPlaying('${v.title}')">
                     ${v.trending ? '<div class="trending-tag">🔥 TRENDING</div>' : ''}
@@ -768,21 +695,16 @@
                     <h3 style="font-size:0.9rem; margin-bottom:12px; height:42px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">${v.title}</h3>
                     <div style="display:flex; gap:8px; flex-wrap:wrap;">
                         <a href="${v.youtube_link}" target="_blank" class="btn btn-main" style="flex:1.5; min-width:70px;"><i class="fab fa-youtube"></i> WATCH</a>
-                        ${v.download_url ? `
-                            <button onclick="event.stopPropagation(); downloadMP3('${v.download_url}', '${v.title}')" class="btn btn-outline" style="flex:1; min-width:55px;"><i class="fas fa-download"></i> MP3</button>
-                        ` : ''}
+                        ${v.download_url ? `<button onclick="event.stopPropagation(); downloadMP3('${v.download_url}', '${v.title}')" class="btn btn-outline" style="flex:1; min-width:55px;"><i class="fas fa-download"></i> MP3</button>` : ''}
                         <button onclick="event.stopPropagation(); copyLink('${v.youtube_link}')" class="btn btn-outline btn-icon"><i class="fas fa-link"></i></button>
                         <button onclick="event.stopPropagation(); shareWA('${v.title}', '${v.youtube_link}')" class="btn btn-outline btn-whatsapp btn-icon"><i class="fab fa-whatsapp"></i></button>
                     </div>
                 </div>
             `).join('');
-
             setTimeout(handleScroll, 200);
         }
 
-        // ============================================================
-        // 10. NOW PLAYING BAR (Premium)
-        // ============================================================
+        // ===== NOW PLAYING =====
         function showNowPlaying(title) {
             const bar = document.getElementById('nowPlaying');
             document.getElementById('npTitle').innerText = `🎵 Now Playing: ${title}`;
@@ -791,17 +713,14 @@
             bar._hide = setTimeout(() => bar.classList.remove('show'), 5000);
         }
 
-        // ============================================================
-        // 11. LOAD DATA
-        // ============================================================
+        // ===== LOAD DATA =====
         fetch('./videos.json')
             .then(res => res.json())
             .then(data => {
                 allVideos = data.videos || [];
                 const featured = document.getElementById('featured-grid');
                 if (featured) {
-                    const top = allVideos.slice(0, 3);
-                    featured.innerHTML = top.map(v => `
+                    featured.innerHTML = allVideos.slice(0, 3).map(v => `
                         <div class="glass-card reveal" onclick="showNowPlaying('${v.title}')">
                             <img src="${v.thumbnail}" loading="lazy">
                             <p style="font-size:0.7rem; margin-top:8px; text-align:center; font-weight:500;">${v.title}</p>
@@ -809,12 +728,8 @@
                     `).join('');
                 }
                 renderVideos(allVideos);
-                if (document.getElementById('c-email')) {
-                    document.getElementById('c-email').innerText = data.contact?.email || 'musicnooo@email.com';
-                }
-                if (document.getElementById('latest-info')) {
-                    document.getElementById('latest-info').innerText = data.home_text || '🎶 Fresh beats everyday!';
-                }
+                if (document.getElementById('c-email')) document.getElementById('c-email').innerText = data.contact?.email || 'musicnooo@email.com';
+                if (document.getElementById('latest-info')) document.getElementById('latest-info').innerText = data.home_text || '🎶 Fresh beats everyday!';
                 setTimeout(handleScroll, 500);
             })
             .catch(err => {
