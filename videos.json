@@ -14,11 +14,11 @@
     },
     {
       "title": "AIRTEL PHONK|MUSIC NOOO",
-      "thumbnail": "https://img.youtube.com/vi/5BCrWLpBXIw/maxresdefault.jpg",
       "youtube_link": "https://youtu.be/5BCrWLpBXIw",
-      "download_link": "https://raw.githubusercontent.com/malikabhishekmn-svg/Music-Nooo/refs/heads/main/music/Stereo%20Love.mp3",
+      "thumbnail": "https://img.youtube.com/vi/5BCrWLpBXIw/maxresdefault.jpg",
       "category": "Remix",
-      "trending": true
+      "trending": false,
+      "download_url": ""
     },
     {
       "title": "GULI MATA",
